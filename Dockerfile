@@ -12,10 +12,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 COPY requirements.txt .
-# CPU 版 torch：pytorch 索引只作为附加源，其余依赖仍走主索引（清华源）
-# 注意不能用 --index-url，否则 torch 的依赖也会去 pytorch 索引找，导致解析失败
+# CPU 版 torch：走交大镜像（国内直连），其余依赖仍走主索引（清华源）
+# 注意不能用 --index-url，否则 torch 的依赖也会去该索引找，导致解析失败
 RUN pip install --no-cache-dir --retries 8 --timeout 60 \
-      torch==2.10.0+cpu --extra-index-url https://download.pytorch.org/whl/cpu \
+      torch==2.10.0+cpu --extra-index-url https://mirror.sjtu.edu.cn/pytorch-wheels/cpu \
  && pip install --no-cache-dir --retries 8 --timeout 60 -r requirements.txt
 
 COPY . .
