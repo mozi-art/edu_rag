@@ -25,36 +25,37 @@ class Config:
         self.EDU_DOCUMENT_LOADERS_DIR = os.path.join(self.PROJECT_DIR, 'rag_qa/edu_document_loaders')
        
         # MySQL 配置
-        # MySQL 主机地址
-        self.MYSQL_HOST = self.config.get('mysql', 'host', fallback='localhost') 
+        # MySQL 主机地址, fallback 默认值
+        self.MYSQL_HOST = os.getenv('MYSQL_HOST', self.config.get('mysql', 'host', fallback='localhost')) 
+        # MySQL 端口
+        self.MYSQL_PORT = os.getenv('MYSQL_PORT', self.config.getint('mysql', 'port', fallback=3306))  
         # MySQL 用户名
         self.MYSQL_USER = self.config.get('mysql', 'user', fallback='root')
         # MySQL 密码
         self.MYSQL_PASSWORD = self.config.get('mysql', 'password', fallback='123456') 
-        # MySQL 端口
-        self.MYSQL_PORT = self.config.getint('mysql', 'port', fallback=3306)  
         # MySQL 数据库名
-        self.MYSQL_DATABASE = self.config.get('mysql', 'database', fallback='subjects_kg') 
+        self.MYSQL_DATABASE = self.config.get('mysql', 'database', fallback='subjects_kg')  
+
 
         # Redis 配置
         # Redis 主机地址
-        self.REDIS_HOST = self.config.get('redis', 'host', fallback='localhost') 
+        self.REDIS_HOST = os.getenv('REDIS_HOST', self.config.get('redis', 'host', fallback='localhost')) 
         # Redis 端口
-        self.REDIS_PORT = self.config.getint('redis', 'port', fallback=6379)  
+        self.REDIS_PORT = os.getenv('REDIS_PORT', self.config.getint('redis', 'port', fallback=6379))  
         # Redis 密码
         self.REDIS_PASSWORD = self.config.get('redis', 'password', fallback='1234') 
         # Redis 数据库编号
         self.REDIS_DB = self.config.getint('redis', 'db', fallback=0)  
 
-         # Milvus 配置
+        # Milvus 配置
         # Milvus 主机地址
-        self.MILVUS_HOST = self.config.get('milvus', 'host', fallback='localhost')
+        self.MILVUS_HOST = os.getenv('MILVUS_HOST', self.config.get('milvus', 'host', fallback='localhost'))
         # Milvus 端口
-        self.MILVUS_PORT = self.config.getint('milvus', 'port', fallback=19530)
+        self.MILVUS_PORT = os.getenv('MILVUS_PORT', self.config.getint('milvus', 'port', fallback=19530))
         # Milvus 数据库名
         self.MILVUS_DATABASE_NAME = self.config.get('milvus', 'database_name', fallback='itcast')
         # Milvus 集合名
-        self.MILVUS_COLLECTION_NAME = self.config.get('milvus', 'collection_name', fallback='edu_rag_collection')
+        self.MILVUS_COLLECTION_NAME = self.config.get('milvus', 'collection_name', fallback='edurag_collection')
 
         # LLM 配置
         # LLM 模型名
