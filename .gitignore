@@ -1,0 +1,27 @@
+# 虚拟环境 / 依赖缓存
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# 密钥与本地配置（本机 .env 不提交；可保留 .env.example / .env.prod）
+.env
+.env.*
+!.env.example
+!.env.prod
+
+# 运行时 / 日志 / 临时
+run/
+logs/
+*.log
+tmp/
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+rag_qa/models/*
