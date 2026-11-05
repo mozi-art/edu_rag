@@ -12,9 +12,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 COPY requirements.txt .
-# CPU 版 torch：避免从 PyPI 拉 nvidia-* 依赖（约 3GB）
-RUN pip install --no-cache-dir torch==2.10.0 --index-url https://download.pytorch.org/whl/cpu \
- && pip install --no-cache-dir -r requirements.txt
+# CPU 版 torch：pytorch 索引只作为附加源，其余依赖仍走主索引（清华源）
+# 注意不能用 --index-url，否则 torch 的依赖也会去 pytorch 索引找，导致解析失败
+RUN pip install --no-cache-dir --retries 8 --timeout 60 \
+      torch==2.10.0+cpu --extra-index-url https://download.pytorch.org/whl/cpu \
+ && pip install --no-cache-dir --retries 8 --timeout 60 -r requirements.txt
 
 COPY . .
 
